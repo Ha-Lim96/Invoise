@@ -7,7 +7,11 @@ import java.util.List;
 
 public class InvoiceRepositoryMichel implements InvoiceRepositoryInterface{
 
-    public void create(Invoice invoice){
 
+    public void create(Invoice invoice){
+        System.out.println("Invoice added with number " +invoice.getNumber()+" for "+invoice.getCustomerName());
     }
+
+
+
 }

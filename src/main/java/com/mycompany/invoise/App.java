@@ -1,11 +1,12 @@
 package com.mycompany.invoise;
 
-import com.mycompany.invoise.controller.InvoiceController;
-import com.mycompany.invoise.controller.InvoiceControllerMichel;
-import com.mycompany.invoise.entity.Invoice;
-import com.mycompany.invoise.service.InvoiceService;
-import com.mycompany.invoise.service.InvoiceServiceMichel;
-import com.sun.tools.jdeprscan.scan.Scan;
+import com.mycompany.invoise.controller.InvoiceControllerKeyboard;
+import com.mycompany.invoise.controller.InvoiceControllerDouchette;
+import com.mycompany.invoise.controller.InvoiceControllerWeb;
+import com.mycompany.invoise.repository.InvoiceRepository;
+import com.mycompany.invoise.repository.InvoiceRepositoryMichel;
+import com.mycompany.invoise.service.InvoiceServiceNumber;
+import com.mycompany.invoise.service.InvoiceServicePrefix;
 
 import java.util.Scanner;
 
@@ -18,18 +19,46 @@ public class App
     public static void main( String[] args )
     {
 
-
         System.out.println("Dans quelle configuration êtes vous ? ");
         Scanner sc = new Scanner(System.in);
         int configuration = sc.nextInt();
 
         if(configuration == 1){
-            InvoiceController invoiceController = new InvoiceController();
-            invoiceController.createInvoice();
-        } else if (configuration == 2){
-            InvoiceControllerMichel invoiceController = new InvoiceControllerMichel();
-            invoiceController.createInvoice();
-        }
 
+            InvoiceControllerKeyboard invoiceController = new InvoiceControllerKeyboard();
+            InvoiceServiceNumber invoiceService = new InvoiceServiceNumber();
+            InvoiceRepository invoiceRepository = new InvoiceRepository();
+            invoiceController.setInvoiceService(invoiceService);
+            invoiceService.setInvoiceRepository(invoiceRepository);
+            invoiceController.createInvoice();
+
+        } else if (configuration == 2){
+
+            InvoiceControllerWeb invoiceController = new InvoiceControllerWeb();
+            InvoiceServicePrefix invoiceService = new InvoiceServicePrefix();
+            InvoiceRepositoryMichel invoiceRepository = new InvoiceRepositoryMichel();
+            invoiceController.setInvoiceService(invoiceService);
+            invoiceService.setInvoiceRepository(invoiceRepository);
+            invoiceController.createInvoice();
+
+        } else if (configuration == 3){
+
+            InvoiceControllerWeb invoiceController = new InvoiceControllerWeb();
+            InvoiceServiceNumber invoiceService = new InvoiceServiceNumber();
+            InvoiceRepositoryMichel invoiceRepository = new InvoiceRepositoryMichel();
+            invoiceController.setInvoiceService(invoiceService);
+            invoiceService.setInvoiceRepository(invoiceRepository);
+            invoiceController.createInvoice();
+
+        } else if (configuration == 4){
+
+            InvoiceControllerDouchette invoiceController = new InvoiceControllerDouchette();
+            InvoiceServiceNumber invoiceService = new InvoiceServiceNumber();
+            InvoiceRepositoryMichel invoiceRepository = new InvoiceRepositoryMichel();
+            invoiceController.setInvoiceService(invoiceService);
+            invoiceService.setInvoiceRepository(invoiceRepository);
+            invoiceController.createInvoice();
+
+        }
     }
 }
