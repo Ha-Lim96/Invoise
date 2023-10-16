@@ -1,64 +1,53 @@
 package com.mycompany.invoise;
 
+import com.mycompany.invoise.controller.InvoiceControllerInterface;
 import com.mycompany.invoise.controller.InvoiceControllerKeyboard;
 import com.mycompany.invoise.controller.InvoiceControllerDouchette;
 import com.mycompany.invoise.controller.InvoiceControllerWeb;
-import com.mycompany.invoise.repository.InvoiceRepository;
-import com.mycompany.invoise.repository.InvoiceRepositoryMichel;
+import com.mycompany.invoise.repository.InvoiceRepositoryInterface;
+import com.mycompany.invoise.repository.InvoiceRepositoryMemory;
+import com.mycompany.invoise.repository.InvoiceRepositoryDatabase;
+import com.mycompany.invoise.service.InvoiceServiceInterface;
 import com.mycompany.invoise.service.InvoiceServiceNumber;
 import com.mycompany.invoise.service.InvoiceServicePrefix;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Scanner;
 
-/**
- * Hello world!
- *
- */
+
 public class App 
 {
-    public static void main( String[] args )
-    {
+    public static void main( String[] args ) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
-        System.out.println("Dans quelle configuration êtes vous ? ");
+
         Scanner sc = new Scanner(System.in);
-        int configuration = sc.nextInt();
+        System.out.println("Quel est la classe du controller ?");
+        String controllerClass = sc.nextLine();
 
-        if(configuration == 1){
+        System.out.println("Quel est la classe du service ?");
+        String serviceClass = sc.nextLine();
 
-            InvoiceControllerKeyboard invoiceController = new InvoiceControllerKeyboard();
-            InvoiceServiceNumber invoiceService = new InvoiceServiceNumber();
-            InvoiceRepository invoiceRepository = new InvoiceRepository();
-            invoiceController.setInvoiceService(invoiceService);
-            invoiceService.setInvoiceRepository(invoiceRepository);
-            invoiceController.createInvoice();
+        System.out.println("Quel est la classe du repository ?");
+        String repositorClass = sc.nextLine();
 
-        } else if (configuration == 2){
 
-            InvoiceControllerWeb invoiceController = new InvoiceControllerWeb();
-            InvoiceServicePrefix invoiceService = new InvoiceServicePrefix();
-            InvoiceRepositoryMichel invoiceRepository = new InvoiceRepositoryMichel();
-            invoiceController.setInvoiceService(invoiceService);
-            invoiceService.setInvoiceRepository(invoiceRepository);
-            invoiceController.createInvoice();
+        InvoiceControllerInterface invoiceController = null;
+        InvoiceServiceInterface invoiceService = null;
+        InvoiceRepositoryInterface invoiceRepository = null;
 
-        } else if (configuration == 3){
+        try{
+            invoiceController = (InvoiceControllerInterface)Class.forName(controllerClass).getDeclaredConstructor().newInstance();
+            invoiceService = (InvoiceServiceInterface)Class.forName(serviceClass).getDeclaredConstructor().newInstance();
+            invoiceRepository = (InvoiceRepositoryInterface)Class.forName(repositorClass).getDeclaredConstructor().newInstance();
 
-            InvoiceControllerWeb invoiceController = new InvoiceControllerWeb();
-            InvoiceServiceNumber invoiceService = new InvoiceServiceNumber();
-            InvoiceRepositoryMichel invoiceRepository = new InvoiceRepositoryMichel();
-            invoiceController.setInvoiceService(invoiceService);
-            invoiceService.setInvoiceRepository(invoiceRepository);
-            invoiceController.createInvoice();
-
-        } else if (configuration == 4){
-
-            InvoiceControllerDouchette invoiceController = new InvoiceControllerDouchette();
-            InvoiceServiceNumber invoiceService = new InvoiceServiceNumber();
-            InvoiceRepositoryMichel invoiceRepository = new InvoiceRepositoryMichel();
-            invoiceController.setInvoiceService(invoiceService);
-            invoiceService.setInvoiceRepository(invoiceRepository);
-            invoiceController.createInvoice();
-
+        } catch(Exception e) {
+            e.printStackTrace();
         }
+
+
+        invoiceController.setInvoiceService(invoiceService);
+        invoiceService.setInvoiceRepository(invoiceRepository);
+        invoiceController.createInvoice();
+
     }
 }
