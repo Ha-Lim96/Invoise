@@ -16,8 +16,12 @@ public class InvoiceServicePrefix implements InvoiceServiceInterface {
     private String prefix;
 
     @Autowired
-    private InvoiceRepositoryInterface invoiceRepository;
+    private final InvoiceRepositoryInterface invoiceRepository;
 
+
+    public InvoiceServicePrefix(InvoiceRepositoryInterface invoiceRepository) {
+        this.invoiceRepository = invoiceRepository;
+    }
 
     public long getLastNumber() {
         return lastNumber;
@@ -37,10 +41,6 @@ public class InvoiceServicePrefix implements InvoiceServiceInterface {
 
     public InvoiceRepositoryInterface getInvoiceRepository() {
         return invoiceRepository;
-    }
-
-    public void setInvoiceRepository(InvoiceRepositoryInterface invoiceRepository) {
-        this.invoiceRepository = invoiceRepository;
     }
 
 

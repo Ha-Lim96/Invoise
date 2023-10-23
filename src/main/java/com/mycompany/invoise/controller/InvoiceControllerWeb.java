@@ -11,15 +11,15 @@ import java.util.Scanner;
 @Controller
 public class InvoiceControllerWeb implements InvoiceControllerInterface{
 
+    public InvoiceControllerWeb(InvoiceServiceInterface invoiceService) {
+        this.invoiceService = invoiceService;
+    }
+
     @Autowired
-    private InvoiceServiceInterface invoiceService;
+    private final InvoiceServiceInterface invoiceService;
 
     public InvoiceServiceInterface getInvoiceService() {
         return invoiceService;
-    }
-
-    public void setInvoiceService(InvoiceServiceInterface invoiceService) {
-        this.invoiceService = invoiceService;
     }
 
     public void createInvoice(){

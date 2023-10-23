@@ -6,18 +6,19 @@ import org.springframework.stereotype.Controller;
 
 import java.util.Scanner;
 
-@Controller
+//@Controller
 public class InvoiceControllerKeyboard implements InvoiceControllerInterface{
 
-    private InvoiceServiceInterface invoiceService;
+    private final InvoiceServiceInterface invoiceService;
+
+    public InvoiceControllerKeyboard(InvoiceServiceInterface invoiceService) {
+        this.invoiceService = invoiceService;
+    }
 
     public InvoiceServiceInterface getInvoiceService() {
         return invoiceService;
     }
 
-    public void setInvoiceService(InvoiceServiceInterface invoiceService) {
-        this.invoiceService = invoiceService;
-    }
 
     public void createInvoice(){
         System.out.println( "What is the customerName ?" );
