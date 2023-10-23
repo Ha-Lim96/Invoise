@@ -1,5 +1,6 @@
-package com.mycompany.invoise.controller;
+package com.mycompany.invoise.controller.web;
 
+import com.mycompany.invoise.controller.InvoiceControllerInterface;
 import com.mycompany.invoise.entity.Invoice;
 
 import com.mycompany.invoise.service.InvoiceServiceInterface;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import java.util.Scanner;
 
 @Controller
-public class InvoiceControllerWeb implements InvoiceControllerInterface{
+public class InvoiceControllerWeb implements InvoiceControllerInterface {
 
     public InvoiceControllerWeb(InvoiceServiceInterface invoiceService) {
         this.invoiceService = invoiceService;
