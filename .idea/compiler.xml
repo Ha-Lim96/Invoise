@@ -7,12 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="invoise" />
+        <module name="invoise-web" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="invoise" options="-parameters" />
+      <module name="invoise" options="" />
+      <module name="invoise-web" options="-parameters" />
     </option>
   </component>
 </project>
