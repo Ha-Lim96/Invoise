@@ -51,8 +51,15 @@ public class InvoiceServicePrefix implements InvoiceServiceInterface {
         invoiceRepository.create(invoice);
     }
 
+
     @Override
     public List<Invoice> getInvoiceList() {
         return invoiceRepository.list();
+    }
+
+
+    @Override
+    public Invoice getInvoiceByNumber(String number) {
+        return invoiceRepository.getById(number);
     }
 }

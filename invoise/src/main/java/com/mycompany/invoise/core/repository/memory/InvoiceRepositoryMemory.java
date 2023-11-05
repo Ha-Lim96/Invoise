@@ -21,6 +21,11 @@ public class InvoiceRepositoryMemory implements InvoiceRepositoryInterface {
     public List<Invoice> list() {
         return (List<Invoice>) new UnsupportedOperationException();
     }
+
+    @Override
+    public Invoice getById(String number) {
+        return null;
+    }
 }
 
 
