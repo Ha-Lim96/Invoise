@@ -20,13 +20,14 @@ public class InvoiceControllerKeyboard implements InvoiceControllerInterface {
     }
 
 
-    public void createInvoice(){
+    public String createInvoice(Invoice invoice){
         System.out.println( "What is the customerName ?" );
         Scanner sc = new Scanner(System.in);
         String customerName = sc.nextLine();
-        Invoice invoice = new Invoice();
+        invoice = new Invoice();
         invoice.setCustomerName(customerName);
         invoiceService.createInvoice(invoice);
+        return null;
     }
 
 
