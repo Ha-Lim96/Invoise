@@ -22,13 +22,11 @@ public class InvoiceResource {
         return invoiceService;
     }
 
-
     @GetMapping
     public List<Invoice> displayHome(){
         System.out.println("La méthode displayHome a été appelé");
         return invoiceService.getInvoiceList();
     }
-
 
     @GetMapping("/{id}")
     public Invoice get(@PathVariable("id")String number){
@@ -49,5 +47,7 @@ public class InvoiceResource {
         return "invoice-create-form";
     }
     */
+
+
 
 }

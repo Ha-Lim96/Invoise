@@ -50,8 +50,8 @@ public class InvoiceControllerWeb {
         return "invoice-create-form";
     }
 
-    /*
-    @PostMapping("")
+
+    @PostMapping("/create")
     public String createInvoice(@Valid @ModelAttribute InvoiceForm invoiceForm, BindingResult results){
 
         if(results.hasErrors()){
@@ -65,7 +65,7 @@ public class InvoiceControllerWeb {
         return "invoice-created";
 
     }
-    */
+
 
 
 }
