@@ -46,9 +46,10 @@ public class InvoiceServicePrefix implements InvoiceServiceInterface {
         return invoiceRepository;
     }
 
-    public void createInvoice(Invoice invoice){
+    public Invoice createInvoice(Invoice invoice){
         invoice.setNumber(String.valueOf(prefix+(++lastNumber)));
         invoiceRepository.create(invoice);
+        return invoice;
     }
 
 
