@@ -5,27 +5,68 @@ import com.mycompany.invoise.core.repository.InvoiceRepositoryInterface;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //@Repository
 public class InvoiceRepositoryMemory implements InvoiceRepositoryInterface {
 
     private static List<Invoice> invoices = new ArrayList<>();
 
-    @Override
-    public Invoice create(Invoice invoice) {
+    //@Override
+    public Invoice save(Invoice invoice) {
         invoices.add(invoice);
         System.out.println("Invoice added with number " +invoice.getNumber()+" for "+invoice.getCustomerName());
         return invoice;
     }
 
-    @Override
-    public List<Invoice> list() {
-        return (List<Invoice>) new UnsupportedOperationException();
+    //@Override
+    public Iterable<Invoice> findAll() {
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public Invoice getById(String number) {
+    public Iterable<Invoice> findAllById(Iterable<String> iterable) {
         return null;
+    }
+
+    @Override
+    public long count() {
+        return 0;
+    }
+
+    @Override
+    public void deleteById(String s) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void delete(Invoice invoice) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteAll(Iterable<? extends Invoice> iterable) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void deleteAll() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public <S extends Invoice> Iterable<S> saveAll(Iterable<S> iterable) {
+        return null;
+    }
+
+    //@Override
+    public Optional<Invoice> findById(String number) {
+        return null;
+    }
+
+    @Override
+    public boolean existsById(String s) {
+        return false;
     }
 }
 
