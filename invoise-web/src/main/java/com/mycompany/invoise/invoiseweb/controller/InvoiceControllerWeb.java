@@ -59,7 +59,7 @@ public class InvoiceControllerWeb {
 
         Invoice invoice = new Invoice();
         invoice.setCustomerName(invoiceForm.getCustomerName());
-        invoice.setCustomerName(invoiceForm.getOrderNumber());
+        invoice.setOrderNumber(invoiceForm.getOrderNumber());
         invoiceService.createInvoice(invoice);
         return "invoice-created";
     }

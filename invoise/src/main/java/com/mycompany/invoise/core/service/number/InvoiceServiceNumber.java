@@ -15,8 +15,6 @@ public class InvoiceServiceNumber implements InvoiceServiceInterface {
     @Autowired
     private InvoiceRepositoryInterface invoiceRepository;
 
-    private static long lastNumber = 0L;
-
     public InvoiceRepositoryInterface getInvoiceRepository() {
         return invoiceRepository;
     }
