@@ -40,14 +40,12 @@ public class InvoiceResource {
     }
 
 
-
      /*
     @GetMapping("/create-form")
     public String displayInvoiceCreateForm(@ModelAttribute InvoiceForm invoice){
         return "invoice-create-form";
     }
     */
-
 
 
 }

@@ -50,7 +50,6 @@ public class InvoiceControllerWeb {
         return "invoice-create-form";
     }
 
-
     @PostMapping("/create")
     public String createInvoice(@Valid @ModelAttribute InvoiceForm invoiceForm, BindingResult results){
 
@@ -63,9 +62,7 @@ public class InvoiceControllerWeb {
         invoice.setCustomerName(invoiceForm.getOrderNumber());
         invoiceService.createInvoice(invoice);
         return "invoice-created";
-
     }
-
 
 
 }
