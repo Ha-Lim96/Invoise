@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Invoice {
 
     @Id
@@ -17,9 +16,11 @@ public class Invoice {
     private String number;
     @Column(length = 13)
     private String orderNumber;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_CUSTOMER", nullable = false)
     private Customer customer;
+
     @OneToMany(
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
@@ -27,6 +28,7 @@ public class Invoice {
     )
     @JoinColumn(name = "INVOICE_NUMBER", nullable = false)
     private List<InvoiceLine> lines=new ArrayList<>();
+
 
     public Invoice(String number, String orderNumber, Customer customer) {
         this.number = number;
