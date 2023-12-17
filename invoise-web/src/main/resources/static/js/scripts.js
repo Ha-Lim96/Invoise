@@ -34,9 +34,7 @@ fetch('../invoice')
             button.appendChild(text);
             td.appendChild(button);
             tr.appendChild(td);
-
         });
-
     });
 
 

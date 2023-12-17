@@ -1,13 +1,14 @@
 package com.mycompany.invoise.core.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NamedEntityGraph(name="invoice.customer", attributeNodes = @NamedAttributeNode("customer"))
 public class Invoice {
 
     @Id
