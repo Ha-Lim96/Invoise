@@ -1,10 +1,10 @@
-package com.mycompany.invoise.core.service.number;
+package com.mycompany.invoise.invoice.service.number;
 
 import com.mycompany.invoise.core.entity.invoice.Invoice;
 
-//import com.mycompany.invoise.core.repository.CustomerRepositoryInterface;
-import com.mycompany.invoise.core.repository.InvoiceRepositoryInterface;
-import com.mycompany.invoise.core.service.InvoiceServiceInterface;
+//import com.mycompany.invoise.invoice.repository.CustomerRepositoryInterface;
+import com.mycompany.invoise.invoice.repository.InvoiceRepositoryInterface;
+import com.mycompany.invoise.invoice.service.InvoiceServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

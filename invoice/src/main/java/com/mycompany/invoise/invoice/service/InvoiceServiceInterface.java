@@ -1,4 +1,4 @@
-package com.mycompany.invoise.core.service;
+package com.mycompany.invoise.invoice.service;
 
 import com.mycompany.invoise.core.entity.invoice.Invoice;
 

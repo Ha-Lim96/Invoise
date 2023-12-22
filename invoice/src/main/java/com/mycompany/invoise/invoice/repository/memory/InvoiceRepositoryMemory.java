@@ -1,18 +1,20 @@
-package com.mycompany.invoise.core.repository.memory;
+package com.mycompany.invoise.invoice.repository.memory;
 
 import com.mycompany.invoise.core.entity.invoice.Invoice;
-import com.mycompany.invoise.core.repository.InvoiceRepositoryInterface;
+import com.mycompany.invoise.invoice.repository.InvoiceRepositoryInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 //@Repository
-public class InvoiceRepositoryMemory implements InvoiceRepositoryInterface {
+public class InvoiceRepositoryMemory {
 
     private static List<Invoice> invoices = new ArrayList<>();
 
-    //@Override
+    /*
+
+    @Override
     public Invoice save(Invoice invoice) {
         invoices.add(invoice);
         System.out.println("Invoice added with number " +invoice.getNumber()+" for "+invoice.getCustomer().getName());
@@ -68,6 +70,8 @@ public class InvoiceRepositoryMemory implements InvoiceRepositoryInterface {
     public boolean existsById(String s) {
         return false;
     }
+
+    */
 }
 
 

@@ -2,9 +2,10 @@ package com.mycompany.invoise.invoice.api;
 
 import com.mycompany.invoise.core.entity.customer.Customer;
 import com.mycompany.invoise.core.entity.invoice.Invoice;
-import com.mycompany.invoise.core.service.InvoiceServiceInterface;
+import com.mycompany.invoise.invoice.service.InvoiceServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,41 +14,47 @@ import java.util.List;
 @RequestMapping("/invoice")
 public class InvoiceResource {
 
-    /*
+
     @Autowired
     private final InvoiceServiceInterface invoiceService;
 
-    public InvoiceResource(InvoiceServiceInterface invoiceService) {
+    @Autowired
+    private RestTemplate restTemplate;
+
+    public InvoiceResource(InvoiceServiceInterface invoiceService, RestTemplate restTemplate) {
         this.invoiceService = invoiceService;
+        this.restTemplate = restTemplate;
     }
 
     public InvoiceServiceInterface getInvoiceService() {
         return invoiceService;
     }
-    */
 
+    public RestTemplate getRestTemplate() {
+        return restTemplate;
+    }
 
     @GetMapping
     public Iterable<Invoice> list(){
         System.out.println("La méthode displayHome a été appelé");
-
-        List<Invoice> liste = new ArrayList<>();
-        Customer customer = new Customer("Lamda");
-        Invoice invoice = new Invoice("NUM_001","001",customer);
-        liste.add(invoice);
-
-        return liste;
-        //return invoiceService.getInvoiceList();
+        Iterable<Invoice> invoices = invoiceService.getInvoiceList();
+        invoices.forEach(invoice-> {
+            invoice.setCustomer(restTemplate.getForObject("http://localhost:8083/customer/"+invoice.getIdCustomer(), Customer.class));
+        });
+        return invoices;
     }
 
-
-    /*
     @GetMapping("/{id}")
     public Invoice get(@PathVariable("id")String number){
         System.out.println("La méthode displayInvoice a été invoqué");
-        return invoiceService.getInvoiceByNumber(number);
+        Invoice invoice = invoiceService.getInvoiceByNumber(number);
+        invoice.setCustomer(restTemplate.getForObject("http://localhost:8083/customer/"+invoice.getIdCustomer(), Customer.class));
+        return invoice;
     }
 
+
+
+    /*
     @PostMapping("")
     public Invoice create(@RequestBody Invoice invoice){
         return invoiceService.createInvoice(invoice);
