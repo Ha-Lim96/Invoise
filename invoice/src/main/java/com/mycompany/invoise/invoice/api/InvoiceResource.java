@@ -1,5 +1,6 @@
 package com.mycompany.invoise.invoice.api;
 
+import com.mycompany.invoise.core.entity.customer.Address;
 import com.mycompany.invoise.core.entity.customer.Customer;
 import com.mycompany.invoise.core.entity.invoice.Invoice;
 import com.mycompany.invoise.invoice.service.InvoiceServiceInterface;
@@ -7,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/invoice")
@@ -48,7 +47,10 @@ public class InvoiceResource {
     public Invoice get(@PathVariable("id")String number){
         System.out.println("La méthode displayInvoice a été invoqué");
         Invoice invoice = invoiceService.getInvoiceByNumber(number);
-        invoice.setCustomer(restTemplate.getForObject("http://localhost:8083/customer/"+invoice.getIdCustomer(), Customer.class));
+        final Customer customer = restTemplate.getForObject("http://localhost:8083/customer/"+invoice.getIdCustomer(), Customer.class);
+        final Address address = restTemplate.getForObject("http://localhost:8083/address/"+customer.getAddress().getId(), Address.class);
+        customer.setAddress(address);
+        invoice.setCustomer(customer);
         return invoice;
     }
 
