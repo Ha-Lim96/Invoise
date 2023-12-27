@@ -7,7 +7,20 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.client.reactive.ClientHttpConnector;
+import org.springframework.http.codec.ClientCodecConfigurer;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.ExchangeFilterFunction;
+import org.springframework.web.reactive.function.client.ExchangeFunction;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriBuilderFactory;
+
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
 @SpringBootApplication
 @EntityScan("com.mycompany.invoise.core.entity.invoice")
@@ -16,7 +29,6 @@ public class InvoiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(InvoiceApplication.class, args);
 	}
-
 
 	@Bean
 	public Hibernate5Module datatypeHibernateModule() {
@@ -28,8 +40,9 @@ public class InvoiceApplication {
 
 	@Bean
 	@LoadBalanced
-	public RestTemplate getRestTemplate() {
-		return new RestTemplate();
+	public WebClient.Builder getWebClientBuilder() {
+		return WebClient.builder();
 	}
+
 
 }

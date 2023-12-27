@@ -7,6 +7,14 @@ import com.mycompany.invoise.invoice.service.InvoiceServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.publisher.ParallelFlux;
+import reactor.core.scheduler.Schedulers;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -18,29 +26,40 @@ public class InvoiceResource {
     private final InvoiceServiceInterface invoiceService;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private WebClient.Builder webClientBuilder;
 
-    public InvoiceResource(InvoiceServiceInterface invoiceService, RestTemplate restTemplate) {
+
+    public InvoiceResource(InvoiceServiceInterface invoiceService) {
         this.invoiceService = invoiceService;
-        this.restTemplate = restTemplate;
     }
 
     public InvoiceServiceInterface getInvoiceService() {
         return invoiceService;
     }
 
-    public RestTemplate getRestTemplate() {
-        return restTemplate;
-    }
-
     @GetMapping
-    public Iterable<Invoice> list(){
+    public ParallelFlux<Invoice> list(){
         System.out.println("La méthode displayHome a été appelé");
+
+        List<Mono<Invoice>> invoiceMono = new ArrayList<>();
+
+        final WebClient webClient = webClientBuilder.baseUrl("http://customer-service").build();
+
         Iterable<Invoice> invoices = invoiceService.getInvoiceList();
         invoices.forEach(invoice-> {
-            invoice.setCustomer(restTemplate.getForObject("http://customer-service/customer/"+invoice.getIdCustomer(), Customer.class));
+            invoiceMono.add(webClient.get()
+                    .uri("/customer/"+invoice.getIdCustomer())
+                    .retrieve()
+                    .bodyToMono(Customer.class)
+                    .map(customer -> {
+                        invoice.setCustomer(customer);
+                        return invoice;
+                    })
+            );
         });
-        return invoices;
+
+        final Flux<Invoice> invoiceFlux = Flux.concat(invoiceMono);
+        return invoiceFlux.parallel().runOn(Schedulers.elastic());
     }
 
 
@@ -48,8 +67,19 @@ public class InvoiceResource {
     public Invoice get(@PathVariable("id")String number){
         System.out.println("La méthode displayInvoice a été invoqué");
         Invoice invoice = invoiceService.getInvoiceByNumber(number);
-        final Customer customer = restTemplate.getForObject("http://customer-service/customer/"+invoice.getIdCustomer(), Customer.class);
-        final Address address = restTemplate.getForObject("http://customer-service/address/"+customer.getAddress().getId(), Address.class);
+
+        final WebClient webClient = webClientBuilder.baseUrl("http://customer-service").build();
+
+        final Customer customer = webClient.get().uri("/customer/"+invoice.getIdCustomer())
+                .retrieve()
+                .bodyToMono(Customer.class)
+                .block();
+
+        final Address address = webClient.get().uri("/address/"+customer.getAddress().getId())
+                .retrieve()
+                .bodyToMono(Address.class)
+                .block();
+
         customer.setAddress(address);
         invoice.setCustomer(customer);
         return invoice;
